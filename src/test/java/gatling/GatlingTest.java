@@ -30,7 +30,7 @@ public class GatlingTest extends Simulation {
 
     public GatlingTest() {
         this.setUp(
-                        scn1.injectOpen(CoreDsl.constantUsersPerSec(10).during(30)))
+                        scn1.injectOpen(CoreDsl.constantUsersPerSec(5).during(10)))
 //                        scn3.injectOpen(CoreDsl.constantUsersPerSec(10).during(10)))
                 .protocols(httpProtocol)
                 .assertions(
