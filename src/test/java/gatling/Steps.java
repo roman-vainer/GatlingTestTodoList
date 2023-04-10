@@ -11,9 +11,7 @@ import static io.gatling.javaapi.jdbc.JdbcDsl.jdbcFeeder;
 
 public class Steps {
 
-    private static final String LOCAL_DB = "localhost";
     private static final String AWS_DB = "todolistexample-env.eba-2ekaiff6.eu-central-1.elasticbeanstalk.com";
-//    private static final String AWS_DB = "http://52.58.56.29";
 
     public static ChainBuilder request_1 = CoreDsl.exec(
             HttpDsl.http("Creating")
@@ -29,6 +27,7 @@ public class Steps {
             "sa",
             "",
             "SELECT ID FROM TASK_ENTITY");
+
 
     public static ChainBuilder request_2 = CoreDsl.feed(feeder).exec(
             HttpDsl.http("Changing")

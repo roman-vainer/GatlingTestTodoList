@@ -10,7 +10,6 @@ import static io.gatling.javaapi.core.CoreDsl.global;
 
 public class GatlingTest extends Simulation {
 
-    private static final String LOCAL_URL = "http://localhost:5000";
     private static final String AWS_URL = "http://todolistexample-env.eba-2ekaiff6.eu-central-1.elasticbeanstalk.com";
 
     HttpProtocolBuilder httpProtocol = HttpDsl.http
@@ -22,19 +21,18 @@ public class GatlingTest extends Simulation {
     ScenarioBuilder scn2 = CoreDsl.scenario("scenario_2")
             .exec(Steps.request_2);
 
-    ScenarioBuilder scn3 = CoreDsl.scenario("scenario_2")
+    ScenarioBuilder scn3 = CoreDsl.scenario("scenario_3")
             .exec(Steps.request_3)
             .pause(1)
             .exec(Steps.request_4);
 
 
     public GatlingTest() {
-        this.setUp(
-                        scn1.injectOpen(CoreDsl.constantUsersPerSec(5).during(10)))
-//                        scn3.injectOpen(CoreDsl.constantUsersPerSec(10).during(10)))
+        this.setUp(scn1.injectOpen(CoreDsl.constantUsersPerSec(5).during(100)),
+                scn3.injectOpen(CoreDsl.constantUsersPerSec(5).during(100)))
                 .protocols(httpProtocol)
                 .assertions(
-//                        global().responseTime().max().lt(10000),
-                        global().successfulRequests().percent().gt(80.0));
+                        global().responseTime().max().lt(3000),
+                global().successfulRequests().percent().gt(90.0));
     }
 }
